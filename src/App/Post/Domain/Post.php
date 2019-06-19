@@ -10,6 +10,7 @@ final class Post implements \JsonSerializable
 {
     private $id;
     private $title;
+    private $subtitle;
     private $content;
     private $status;
     private $createdAt;
@@ -18,6 +19,7 @@ final class Post implements \JsonSerializable
     private function __construct(
         UuId $id,
         Title $title,
+        Subtitle $subtitle,
         string $content,
         Status $status,
         \DateTime $createdAt,
@@ -25,6 +27,7 @@ final class Post implements \JsonSerializable
     ) {
         $this->setId($id);
         $this->setTitle($title);
+        $this->setSubtitle($subtitle);
         $this->setContent($content);
         $this->setStatus($status);
         $this->setCreatedAt($createdAt);
@@ -34,6 +37,7 @@ final class Post implements \JsonSerializable
     public static function fromNativeData(
         string $id,
         Title $title,
+        Subtitle $subtitle,
         string $content,
         Status $status,
         \DateTime $createdAt,
@@ -42,6 +46,7 @@ final class Post implements \JsonSerializable
         return new self(
             UuId::fromString($id),
             $title,
+            $subtitle,
             $content,
             $status,
             $createdAt,
@@ -49,13 +54,13 @@ final class Post implements \JsonSerializable
         );
     }
 
-    public static function new(Title $title, string $content): self
+    public static function new(Title $title, Subtitle $subtitle, string $content): self
     {
         $id = UuId::new();
         $status = Status::draft();
         $createdAt = new \DateTime();
 
-        return new self($id, $title, $content, $status, $createdAt);
+        return new self($id, $title, $subtitle, $content, $status, $createdAt);
     }
 
     public function id() : UuId
@@ -66,6 +71,11 @@ final class Post implements \JsonSerializable
     public function title(): Title
     {
         return $this->title;
+    }
+
+    public function subtitle(): Subtitle
+    {
+        return $this->subtitle;
     }
 
     public function content(): string
@@ -96,6 +106,11 @@ final class Post implements \JsonSerializable
     private function setTitle(Title $title)
     {
         $this->title = $title;
+    }
+
+    private function setSubtitle(Subtitle $subtitle)
+    {
+        $this->subtitle = $subtitle;
     }
 
     private function setContent(string $content)
@@ -148,6 +163,7 @@ final class Post implements \JsonSerializable
         return [
             'id' => (string) $this->id,
             'title' => $this->title,
+            'subtitle' => $this->subtitle,
             'content' => $this->content,
             'status' => $this->status,
             'createdAt' => $this->createdAt,

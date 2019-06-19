@@ -10,16 +10,23 @@ class PostResponse implements \JsonSerializable
 {
     private $title;
     private $content;
+    private $subtitle;
 
     public function __construct(Post $post)
     {
         $this->title = $post->title();
+        $this->subtitle = $post->subtitle();
         $this->content = $post->content();
     }
 
     public function title(): string
     {
         return $this->title->title();
+    }
+
+    public function subtitle(): string
+    {
+        return $this->subtitle->subtitle();
     }
 
     public function content(): string
@@ -31,6 +38,7 @@ class PostResponse implements \JsonSerializable
     {
         return [
             'title' => (string) $this->title,
+            'subtitle' => (string) $this->subtitle,
             'content' => $this->content
         ];
     }

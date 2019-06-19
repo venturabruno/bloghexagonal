@@ -53,6 +53,10 @@ class EntityFactory implements FactoryInterface
             Type::addType('post_title_type', 'App\Post\Infrastructure\Persistence\Doctrine\Type\PostTitleType');
         }
 
+        if (!Type::hasType('post_subtitle_type')) {
+            Type::addType('post_subtitle_type', 'App\Post\Infrastructure\Persistence\Doctrine\Type\PostSubtitleType');
+        }
+
         if (!Type::hasType('post_status_type')) {
             Type::addType('post_status_type', 'App\Post\Infrastructure\Persistence\Doctrine\Type\PostStatusType');
         }

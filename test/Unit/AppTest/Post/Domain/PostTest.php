@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Test\Unit\AppTest\Post\Domain;
 
+use App\Post\Domain\Subtitle;
 use PHPUnit\Framework\TestCase;
 use Faker\Factory as Faker;
 use App\Core\Domain\UuId;
@@ -21,6 +22,7 @@ class PostTest extends TestCase
 
         $this->data['id'] = UuId::new();
         $this->data['title'] = Title::new($faker->title);
+        $this->data['subtitle'] = Subtitle::new($faker->title);
         $this->data['content'] = $faker->realText();
         $this->data['status'] = Status::draft();
         $this->data['createdAt'] = new \DateTime;
@@ -32,6 +34,7 @@ class PostTest extends TestCase
         $post = Post::fromNativeData(
             (string) $this->data['id'],
             $this->data['title'],
+            $this->data['subtitle'],
             $this->data['content'],
             $this->data['status'],
             $this->data['createdAt'],
@@ -41,6 +44,7 @@ class PostTest extends TestCase
         $this->assertInstanceOf(Post::class, $post);
         $this->assertEquals($post->id(), $this->data['id']);
         $this->assertEquals($post->title(), $this->data['title']);
+        $this->assertEquals($post->subtitle(), $this->data['subtitle']);
         $this->assertEquals($post->content(), $this->data['content']);
         $this->assertEquals($post->status(), $this->data['status']);
         $this->assertEquals($post->createdAt(), $this->data['createdAt']);
@@ -49,11 +53,12 @@ class PostTest extends TestCase
 
     public function testNew()
     {
-        $post = Post::new($this->data['title'], $this->data['content']);
+        $post = Post::new($this->data['title'], $this->data['subtitle'], $this->data['content']);
 
         $this->assertInstanceOf(Post::class, $post);
         $this->assertInstanceOf(UuId::class, $post->id());
         $this->assertEquals($post->title(), $this->data['title']);
+        $this->assertEquals($post->subtitle(), $this->data['subtitle']);
         $this->assertEquals($post->content(), $this->data['content']);
     }
 
@@ -62,6 +67,7 @@ class PostTest extends TestCase
         $post = Post::fromNativeData(
             (string) $this->data['id'],
             $this->data['title'],
+            $this->data['subtitle'],
             $this->data['content'],
             $this->data['status'],
             $this->data['createdAt'],
@@ -71,6 +77,7 @@ class PostTest extends TestCase
         $expected =[
             'id' => (string) $this->data['id'],
             'title' => $this->data['title'],
+            'subtitle' => $this->data['subtitle'],
             'content' => $this->data['content'],
             'status' => $this->data['status'],
             'createdAt' => $this->data['createdAt'],
@@ -89,6 +96,7 @@ class PostTest extends TestCase
         $post = Post::fromNativeData(
             'a',
             $this->data['title'],
+            $this->data['subtitle'],
             $this->data['content'],
             $this->data['status'],
             $this->data['createdAt'],
@@ -102,12 +110,12 @@ class PostTest extends TestCase
      */
     public function testContentIsEmpty()
     {
-        Post::new($this->data['title'], '');
+        Post::new($this->data['title'], $this->data['subtitle'], '');
     }
 
     public function testPublish()
     {
-        $post = Post::new($this->data['title'], $this->data['content']);
+        $post = Post::new($this->data['title'], $this->data['subtitle'], $this->data['content']);
 
         $post->publish();
 

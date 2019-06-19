@@ -27,6 +27,7 @@ class PostHandler implements RequestHandlerInterface
         try {
             $postRequest = new PostRequest(
                 $params['title'] ?? '',
+                $params['subtitle'] ?? '',
                 $params['content'] ?? ''
             );
             $postUseCase = $this->postUseCase;

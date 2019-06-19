@@ -10,6 +10,7 @@
             <generator strategy="NONE" />
         </id>
         <field name="title" type="post_title_type" length="255" column="title" />
+        <field name="subtitle" type="post_subtitle_type" length="255" column="subtitle" />
         <field name="content" type="string" length="250" column="content" />
         <field name="status" type="post_status_type" length="1" column="status" />
         <field name="createdAt" type="datetime" column="created_at" />

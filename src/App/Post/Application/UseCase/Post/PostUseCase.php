@@ -20,6 +20,7 @@ class PostUseCase
     {
         $post = Post::new(
             $postRequest->title(),
+            $postRequest->subtitle(),
             $postRequest->content()
         );
 

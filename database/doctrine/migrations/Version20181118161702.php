@@ -23,6 +23,7 @@ final class Version20181118161702 extends AbstractMigration
         $this->addSql('CREATE TABLE posts (
             id VARCHAR(36) NOT NULL,
             title varchar(255) NOT NULL,
+            subtitle varchar(255) NOT NULL,
             content TEXT NULL,
             status TINYINT DEFAULT 20 NOT NULL,
             created_at DATETIME NOT NULL,

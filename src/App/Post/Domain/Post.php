@@ -20,7 +20,7 @@ final class Post implements \JsonSerializable
         UuId $id,
         Title $title,
         Subtitle $subtitle,
-        string $content,
+        Content $content,
         Status $status,
         \DateTime $createdAt,
         ?\DateTime $publishedAt = null
@@ -38,7 +38,7 @@ final class Post implements \JsonSerializable
         string $id,
         Title $title,
         Subtitle $subtitle,
-        string $content,
+        Content $content,
         Status $status,
         \DateTime $createdAt,
         ?\DateTime $publishedAt = null
@@ -54,7 +54,7 @@ final class Post implements \JsonSerializable
         );
     }
 
-    public static function new(Title $title, Subtitle $subtitle, string $content): self
+    public static function new(Title $title, Subtitle $subtitle, Content $content): self
     {
         $id = UuId::new();
         $status = Status::draft();
@@ -78,7 +78,7 @@ final class Post implements \JsonSerializable
         return $this->subtitle;
     }
 
-    public function content(): string
+    public function content(): Content
     {
         return $this->content;
     }
@@ -113,12 +113,8 @@ final class Post implements \JsonSerializable
         $this->subtitle = $subtitle;
     }
 
-    private function setContent(string $content)
+    private function setContent(Content $content)
     {
-        if (empty($content)) {
-            throw new \InvalidArgumentException('Content is empty');
-        }
-
         $this->content = $content;
     }
 

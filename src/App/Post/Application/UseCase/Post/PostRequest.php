@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Post\Application\UseCase\Post;
 
+use App\Post\Domain\Content;
 use App\Post\Domain\Subtitle;
 use App\Post\Domain\Title;
 
@@ -17,7 +18,7 @@ class PostRequest
     {
         $this->title = Title::new($title);
         $this->subtitle = Subtitle::new($subtitle);
-        $this->content = $content;
+        $this->content = Content::new($content);
     }
 
     public function title(): Title
@@ -30,7 +31,7 @@ class PostRequest
         return $this->subtitle;
     }
 
-    public function content(): string
+    public function content(): Content
     {
         return $this->content;
     }

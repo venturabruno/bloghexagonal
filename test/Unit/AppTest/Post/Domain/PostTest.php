@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Test\Unit\AppTest\Post\Domain;
 
+use App\Post\Domain\Content;
 use App\Post\Domain\Subtitle;
 use PHPUnit\Framework\TestCase;
 use Faker\Factory as Faker;
@@ -23,7 +24,7 @@ class PostTest extends TestCase
         $this->data['id'] = UuId::new();
         $this->data['title'] = Title::new($faker->title);
         $this->data['subtitle'] = Subtitle::new($faker->title);
-        $this->data['content'] = $faker->realText();
+        $this->data['content'] = Content::new($faker->realText());
         $this->data['status'] = Status::draft();
         $this->data['createdAt'] = new \DateTime;
         $this->data['publishedAt'] =  new \DateTime;
@@ -102,15 +103,6 @@ class PostTest extends TestCase
             $this->data['createdAt'],
             $this->data['publishedAt']
         );
-    }
-
-    /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Content is empty
-     */
-    public function testContentIsEmpty()
-    {
-        Post::new($this->data['title'], $this->data['subtitle'], '');
     }
 
     public function testPublish()

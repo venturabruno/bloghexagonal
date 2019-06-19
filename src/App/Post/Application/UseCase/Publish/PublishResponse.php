@@ -31,7 +31,7 @@ class PublishResponse implements \JsonSerializable
 
     public function content(): string
     {
-        return $this->content;
+        return $this->content->content();
     }
 
     public function jsonSerialize(): array
@@ -39,7 +39,7 @@ class PublishResponse implements \JsonSerializable
         return [
             'title' => (string) $this->title,
             'subtitle' => (string) $this->subtitle,
-            'content' => $this->content
+            'content' => (string) $this->content
         ];
     }
 }

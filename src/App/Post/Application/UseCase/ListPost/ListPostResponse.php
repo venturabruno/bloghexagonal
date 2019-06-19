@@ -27,7 +27,7 @@ class ListPostResponse implements \JsonSerializable
                 'id' => (string) $post->id(),
                 'title' => (string) $post->title(),
                 'subtitle' => (string) $post->subtitle(),
-                'content' => $post->content(),
+                'content' => (string) $post->content(),
                 'published' => $post->isPublished(),
                 'publishedAt' => $post->publishedAt()
             ];

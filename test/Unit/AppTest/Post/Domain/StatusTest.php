@@ -9,6 +9,14 @@ use App\Post\Domain\Status;
 
 class StatusTest extends TestCase
 {
+    public function testFromNativeData()
+    {
+        $status = Status::fromNativeData(Status::published()->status());
+
+        $this->assertInstanceOf(Status::class, $status);
+        $this->assertEquals($status->status(), (integer) Status::published()->status());
+    }
+
     public function testPublished()
     {
         $this->assertInstanceOf(Status::class, Status::published());

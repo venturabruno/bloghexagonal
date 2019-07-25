@@ -111,7 +111,27 @@ class PostTest extends TestCase
 
         $post->publish();
 
-        $this->assertTrue($post->status()->equalsTo(Status::published()));
+        $this->assertEquals(Status::published(), $post->status());
+    }
+
+    public function testUnpublish()
+    {
+        $post = Post::new($this->data['title'], $this->data['subtitle'], $this->data['content']);
+
+        $post->publish();
+        $post->unpublish();
+
+        $this->assertEquals(Status::draft(), $post->status());
+        $this->assertNull($post->publishedAt());
+    }
+
+    public function testIsPublished()
+    {
+        $post = Post::new($this->data['title'], $this->data['subtitle'], $this->data['content']);
+
+        $post->publish();
+
+        $this->assertTrue($post->isPublished());
         $this->assertInstanceOf(\DateTime::class, $post->publishedAt());
     }
 }

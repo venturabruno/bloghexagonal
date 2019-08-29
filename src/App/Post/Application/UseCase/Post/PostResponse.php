@@ -37,9 +37,9 @@ class PostResponse implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'title' => (string) $this->title,
-            'subtitle' => (string) $this->subtitle,
-            'content' => (string) $this->content
+            'title' => (string) $this->title(),
+            'subtitle' => (string) $this->subtitle(),
+            'content' => (string) $this->content()
         ];
     }
 }

@@ -6,6 +6,7 @@ namespace App\Post\Infrastructure\Handler;
 
 use App\Post\Application\UseCase\Publish\PublishRequest;
 use App\Post\Application\UseCase\Publish\PublishUseCase;
+use App\Post\Domain\PostDoesNotExistException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -28,7 +29,7 @@ class PublishHandler implements RequestHandlerInterface
             );
             $publishUseCase = $this->publishUseCase;
             $publishResponse = $publishUseCase($publishRequest);
-        } catch (UserAlreadyExistsException $exception) {
+        } catch (PostDoesNotExistException $exception) {
             return new JsonResponse([$exception->getMessage()], 422);
         } catch (\LogicException $exception) {
             return new JsonResponse([$exception->getMessage()], 422);

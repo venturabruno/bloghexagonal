@@ -1,6 +1,7 @@
 .idea
 composer.phar
 composer.lock
+coverage/
 clover.xml
 coveralls-upload.json
 phpunit.xml

@@ -30,10 +30,7 @@ class PostHandler implements RequestHandlerInterface
                 $params['subtitle'] ?? '',
                 $params['content'] ?? ''
             );
-            $postUseCase = $this->postUseCase;
-            $postResponse = $postUseCase($postRequest);
-        } catch (UserAlreadyExistsException $exception) {
-            return new JsonResponse([$exception->getMessage()], 422);
+            $postResponse = ($this->postUseCase)($postRequest);
         } catch (\LogicException $exception) {
             return new JsonResponse([$exception->getMessage()], 422);
         }

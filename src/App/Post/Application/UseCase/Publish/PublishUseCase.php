@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Post\Application\UseCase\Publish;
 
+use App\Post\Domain\PostDoesNotExistException;
 use App\Post\Domain\PostRepository;
 
 class PublishUseCase
@@ -20,7 +21,7 @@ class PublishUseCase
         $post = $this->postRepository->find($postRequest->id());
 
         if (is_null($post)) {
-            throw new UserAlreadyExistsException();
+            throw new PostDoesNotExistException();
         }
 
         $post->publish();

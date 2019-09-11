@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Post\Domain;
 
+use App\Core\Domain\Entity;
 use App\Core\Domain\UuId;
 
-final class Post implements \JsonSerializable
+final class Post extends Entity implements \JsonSerializable
 {
     private $id;
     private $title;
@@ -63,11 +64,6 @@ final class Post implements \JsonSerializable
         return new self($id, $title, $subtitle, $content, $status, $createdAt);
     }
 
-    public function id() : UuId
-    {
-        return $this->id;
-    }
-
     public function title(): Title
     {
         return $this->title;
@@ -96,11 +92,6 @@ final class Post implements \JsonSerializable
     public function publishedAt(): ?\DateTime
     {
         return $this->publishedAt;
-    }
-
-    private function setId(UuId $id)
-    {
-        $this->id = $id;
     }
 
     private function setTitle(Title $title)

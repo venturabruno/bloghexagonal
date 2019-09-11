@@ -18,6 +18,10 @@ use App\Post\Infrastructure\Handler\PostHandlerFactory;
 use App\Post\Infrastructure\Handler\PublishHandler;
 use App\Post\Infrastructure\Handler\PublishHandlerFactory;
 use App\Post\Infrastructure\Persistence\Doctrine\DoctrinePostRepositoryFactory;
+use App\Post\Infrastructure\Persistence\Doctrine\Type\PostContentType;
+use App\Post\Infrastructure\Persistence\Doctrine\Type\PostStatusType;
+use App\Post\Infrastructure\Persistence\Doctrine\Type\PostSubtitleType;
+use App\Post\Infrastructure\Persistence\Doctrine\Type\PostTitleType;
 
 class ConfigProvider
 {
@@ -29,7 +33,13 @@ class ConfigProvider
                 'metadata' => [
                     __DIR__ . '/../Persistence/Doctrine/Metadata',
                 ],
-            ]
+                'type' => [
+                    'post_title_type' => PostTitleType::class,
+                    'post_subtitle_type' => PostSubtitleType::class,
+                    'post_content_type' => PostContentType::class,
+                    'post_status_type' => PostStatusType::class,
+                ],
+            ],
         ];
     }
 

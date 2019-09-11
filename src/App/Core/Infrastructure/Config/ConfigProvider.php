@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Core\Infrastructure\Config;
 
+use App\Core\Infrastructure\Persistence\Doctrine\Type\UuIdType;
 use Doctrine\ORM\EntityManager;
 use App\Core\Infrastructure\Factory\EntityFactory;
 
@@ -28,6 +29,9 @@ class ConfigProvider
             'doctrine' => [
                 'metadata' => [
                     __DIR__ . '/../Persistence/Doctrine/Metadata',
+                ],
+                'type' => [
+                    'uuid_type' => UuIdType::class,
                 ],
             ],
         ];

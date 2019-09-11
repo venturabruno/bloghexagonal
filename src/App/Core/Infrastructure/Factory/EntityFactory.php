@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace App\Core\Infrastructure\Factory;
 
@@ -26,11 +26,7 @@ class EntityFactory implements FactoryInterface
             throw new \UnexpectedValueException("Missing doctrine connection config for orm_default driver");
         }
 
-        if ($development) {
-            $cache = new ArrayCache();
-        } else {
-            $cache = new ApcuCache();
-        }
+        $cache = $this->defineCache($development);
 
         $config = new Configuration();
         $config->setAutoGenerateProxyClasses($development);
@@ -45,26 +41,26 @@ class EntityFactory implements FactoryInterface
         $config->setQueryCacheImpl($cache);
         $config->setMetadataCacheImpl($cache);
 
-        if (!Type::hasType('uuid_type')) {
-            Type::addType('uuid_type', 'App\Core\Infrastructure\Persistence\Doctrine\Type\UuIdType');
-        }
-
-        if (!Type::hasType('post_title_type')) {
-            Type::addType('post_title_type', 'App\Post\Infrastructure\Persistence\Doctrine\Type\PostTitleType');
-        }
-
-        if (!Type::hasType('post_subtitle_type')) {
-            Type::addType('post_subtitle_type', 'App\Post\Infrastructure\Persistence\Doctrine\Type\PostSubtitleType');
-        }
-
-        if (!Type::hasType('post_content_type')) {
-            Type::addType('post_content_type', 'App\Post\Infrastructure\Persistence\Doctrine\Type\PostContentType');
-        }
-
-        if (!Type::hasType('post_status_type')) {
-            Type::addType('post_status_type', 'App\Post\Infrastructure\Persistence\Doctrine\Type\PostStatusType');
-        }
+        $this->addTypes($doctrineConfig);
 
         return EntityManager::create($doctrineConfig['connection']['orm_default'], $config);
+    }
+
+    private function addTypes($doctrineConfig)
+    {
+        foreach ($doctrineConfig['type'] as $type => $path) {
+            if (!Type::hasType($type)) {
+                Type::addType($type, $path);
+            }
+        }
+    }
+
+    private function defineCache($development)
+    {
+        if ($development) {
+            return new ArrayCache();
+        }
+
+        return new ApcuCache();
     }
 }
